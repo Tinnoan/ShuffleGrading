@@ -10,51 +10,24 @@ namespace ShuffleGrading.Grading
     {
         public double Grade(int[] deck, bool[] origins)
         {
-            // Number of groups to break the deck into for the Chi-squared test
-            int numGroups = 4;
+            int numSections = 4;
+            int sectionSize = deck.Length / numSections;
+            double expectedCount = sectionSize / 2.0;
 
-            // The observed counts are the counts of each card in each position within a group
-            int[][] observed = new int[numGroups][];
-            for (int i = 0; i < numGroups; i++)
+            double chiSquareStatistic = 0;
+
+            for (int i = 0; i < numSections; i++)
             {
-                observed[i] = new int[deck.Length / numGroups + (i < deck.Length % numGroups ? 1 : 0)];
+                int start = i * sectionSize;
+                int end = start + sectionSize;
+                int topHalfCount = origins.Skip(start).Take(sectionSize).Count(origin => origin);
+                int bottomHalfCount = sectionSize - topHalfCount;
+
+                chiSquareStatistic += Math.Pow(topHalfCount - expectedCount, 2) / expectedCount;
+                chiSquareStatistic += Math.Pow(bottomHalfCount - expectedCount, 2) / expectedCount;
             }
 
-            int groupSize = deck.Length / numGroups;
-            int extraCards = deck.Length % numGroups;
-
-            for (int i = 0; i < deck.Length; i++)
-            {
-                int group;
-                int position;
-                if (i < (groupSize + 1) * extraCards)
-                {
-                    group = i / (groupSize + 1);
-                    position = i % (groupSize + 1);
-                }
-                else
-                {
-                    group = (i - extraCards) / groupSize;
-                    position = (i - extraCards) % groupSize;
-                }
-                observed[group][position]++;
-            }
-
-            // The expected counts are the counts of each card in each position within a group in a perfectly ordered deck
-            double[] expected = new double[groupSize + (extraCards > 0 ? 1 : 0)];
-            for (int i = 0; i < expected.Length; i++)
-            {
-                expected[i] = numGroups;
-            }
-
-            // Calculate the chi-squared statistic
-            double chi = 0.0;
-            for (int i = 0; i < numGroups; i++)
-            {
-                chi += ChiSqTest(observed[i], expected);
-            }
-
-            return chi;
+            return chiSquareStatistic;
         }
 
         public double ChiSqTest(int[] observed, double[] expected)

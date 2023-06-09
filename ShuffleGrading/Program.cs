@@ -22,7 +22,8 @@ namespace ShuffleGrading
                 //new RiffleTest(),
                 //new RunsTest(),
                 //new ChiSquaredTest(),
-                new DistributionDistance(),
+                //new DistributionDistance(),
+                new PermutationTest()
             };
             //List<IGradingMetric> gradingMetrics = new List<IGradingMetric>
             //{

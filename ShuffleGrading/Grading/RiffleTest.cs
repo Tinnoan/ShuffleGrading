@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShuffleGrading.Grading
 {
-    internal class RiffleTest : IGradingMetric
+    public class RiffleTest : IGradingMetric
     {
         public double Grade(int[] deck, bool[] origins)
         {

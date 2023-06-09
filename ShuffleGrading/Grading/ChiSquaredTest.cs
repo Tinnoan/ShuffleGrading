@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShuffleGrading.Grading
 {
-    internal class ChiSquaredTest : IGradingMetric
+    public class ChiSquaredTest : IGradingMetric
     {
         public double Grade(int[] deck, bool[] origins)
         {

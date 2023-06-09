@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShuffleGrading.Grading
 {
-    internal class InversionCount : IGradingMetric
+    public class InversionCount : IGradingMetric
     {
         public double Grade(int[] deck, bool[] origins)
         {

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 using ShuffleGrading.Grading;
+using ShuffleGrading.ShuffleTypes;
 using static ShuffleGrading.Program;
 
 namespace ShuffleGrading
@@ -30,10 +31,10 @@ namespace ShuffleGrading
             //    new InversionCount()
             //};
 
-            ShuffleGrading(ShuffleMethods.TopToBottomShuffle, 5, gradingMetrics);
-            ShuffleGrading(ShuffleMethods.PerfectShuffle, 5, gradingMetrics);
-            ShuffleGrading(ShuffleMethods.PerfectRiffleShuffle, 5, gradingMetrics);
-            ShuffleGrading(ShuffleMethods.RiffleShuffle, 5, gradingMetrics);
+            ShuffleGrading(new TopToBottomShuffle(), 5, gradingMetrics);
+            ShuffleGrading(new PerfectShuffle(), 5, gradingMetrics);
+            ShuffleGrading(new PerfectRiffleShuffle(), 5, gradingMetrics);
+            ShuffleGrading(new RiffleShuffle(), 5, gradingMetrics);
 
             Console.ReadLine();
         }
@@ -46,7 +47,7 @@ namespace ShuffleGrading
             return deck;
         }
 
-        static void ShuffleGrading(Action<int[], bool[]> shuffleMethod, int times, List<IGradingMetric> gradingMetrics)
+        static void ShuffleGrading(IShuffle shuffleMethod, int times, List<IGradingMetric> gradingMetrics)
         {
             int[] deck = InitializeDeck();
 
@@ -62,7 +63,7 @@ namespace ShuffleGrading
                     {
                         origins[j] = true; // or false, doesn't really matter as long as it's consistent
                     }
-                    Shuffle(deck, origins, shuffleMethod, times);
+                    Shuffle(deck, origins, shuffleMethod.Shuffle, times);
                     scores.Add(gradingMetric.Grade(deck, origins));
                     ResetDeck(deck);
                     ResetOrigins(origins);
@@ -73,7 +74,7 @@ namespace ShuffleGrading
                 result.Min = scores.Min();
                 result.Mean = scores.Average();
                 result.Median = Median(scores);
-                result.Name = shuffleMethod.Method.Name;
+                result.Name = shuffleMethod.Name;
                 result.GradingMetric = gradingMetric?.ToString();
                 result.StandardDeviation = CalculateStandardDeviation(scores);
                 result.Times = times;

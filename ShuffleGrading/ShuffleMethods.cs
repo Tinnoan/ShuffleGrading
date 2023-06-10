@@ -10,6 +10,11 @@ namespace ShuffleGrading
     {
         private static readonly Random Rng = new();
 
+        /// <summary>
+        /// This is a perfect riffle shuffle. It splits the deck into two halves, then interleaves the cards from the two halves.
+        /// </summary>
+        /// <param name="deck"></param>
+        /// <param name="origins"></param>
         public static void PerfectRiffleShuffle(int[] deck, bool[] origins)
         {
             int n = deck.Length;
@@ -43,6 +48,11 @@ namespace ShuffleGrading
             }
         }
 
+        /// <summary>
+        /// This is a riffle shuffle. It splits the deck into two halves, then randomly interleaves the cards from the two halves.
+        /// </summary>
+        /// <param name="deck"></param>
+        /// <param name="origins"></param>
         public static void RiffleShuffle(int[] deck, bool[] origins)
         {
             int n = deck.Length;
@@ -98,6 +108,11 @@ namespace ShuffleGrading
             }
         }
 
+        /// <summary>
+        /// This is a top-to-bottom shuffle. It moves the top card to the bottom of the deck. It is meant as an example of a bad shuffle.
+        /// </summary>
+        /// <param name="deck"></param>
+        /// <param name="origins"></param>
         public static void TopToBottomShuffle(int[] deck, bool[] origins)
         {
             int topCard = deck[0];
@@ -112,6 +127,11 @@ namespace ShuffleGrading
             origins[^1] = topOrigin;
         }
 
+        /// <summary>
+        /// This is a perfect shuffle. Using the Fisher-Yates algorithm, it shuffles the deck in O(n) time.
+        /// </summary>
+        /// <param name="deck"></param>
+        /// <param name="origins"></param>
         public static void PerfectShuffle(int[] deck, bool[] origins)
         {
             int n = deck.Length;

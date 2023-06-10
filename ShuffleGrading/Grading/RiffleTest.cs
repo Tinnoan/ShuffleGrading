@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ShuffleGrading.Grading
 {
+    /// <summary>
+    /// This is a riffle test. It counts the number of switches in the deck.
+    /// A switch is a pair of cards where the second card's origin is different from the first card's origin.
+    /// </summary>
     public class RiffleTest : IGradingMetric
     {
         public double Grade(int[] deck, bool[] origins)

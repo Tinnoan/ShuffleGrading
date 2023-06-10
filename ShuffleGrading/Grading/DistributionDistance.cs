@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ShuffleGrading.Grading
 {
+    /// <summary>
+    /// This is a distribution distance test. It calculates the distance between the original and shuffled decks.
+    /// </summary>
     public class DistributionDistance : IGradingMetric
     {
         public double Grade(int[] deck, bool[] origins)

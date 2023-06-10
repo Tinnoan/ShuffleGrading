@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ShuffleGrading.Grading
 {
+    /// <summary>
+    /// This is a runs test. It counts the number of runs in the deck.
+    /// A run is a sequence of cards where each card is one higher or one lower than the previous card.
+    /// </summary>
     public class RunsTest : IGradingMetric
     {
         public double Grade(int[] deck, bool[] origins)

@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ShuffleGrading.Grading
 {
+    /// <summary>
+    /// This is a rising sequence test. It counts the number of rising sequences in the deck.
+    /// A rising sequence is a sequence of cards where each card is greater than the previous card.
+    /// </summary>
     public class RisingSequence : IGradingMetric
     {
         public double Grade(int[] deck, bool[] origins)

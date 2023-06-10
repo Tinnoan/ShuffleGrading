@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 using ShuffleGrading.Grading;
+using ShuffleGrading.Results;
 using ShuffleGrading.ShuffleTypes;
 using static ShuffleGrading.Program;
 
@@ -158,34 +159,5 @@ namespace ShuffleGrading
             double standardDeviation = Math.Sqrt(sumOfSquaresOfDifferences / values.Count);
             return standardDeviation;
         }
-
-
-        public class Result : IResult
-        {
-            public string? Name { get; set; }
-            public int Permutations { get; set; }
-            public int Times { get; set; }
-            public double Max { get; set; }
-            public double Min { get; set; }
-            public double Mean { get; set; }
-            public double Median { get; set; }
-            public string? GradingMetric { get; set; }
-            public double StandardDeviation { get; set; }
-            public List<double>? Scores { get; set; }
-        }
-    }
-
-    internal interface IResult
-    {
-        public string? Name { get; set; }
-        public int Permutations { get; set; }
-        public int Times { get; set; }
-        public double Max { get; set; }
-        public double Min { get; set; }
-        public double Mean { get; set; }
-        public double Median { get; set; }
-        public string? GradingMetric { get; set; }
-        public double StandardDeviation { get; set; }
-        public List<double>? Scores { get; set; }
     }
 }

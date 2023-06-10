@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace ShuffleGrading.Grading
 {
-    /// <summary>
-    /// This is a distribution of distances between card positions test. It calculates the distribution of distances between card positions.
-    /// </summary>
     public class DistributionDistance : IGradingMetric
     {
+        /// <summary>
+        /// This is a distribution of distances between card positions test. It calculates the distribution of distances between card positions.
+        /// </summary>
+        public DistributionDistance()
+        {
+            
+        }
         public string? Name { get; } = "Distribution distance";
 
         public double Grade(int[] deck, bool[] origins)

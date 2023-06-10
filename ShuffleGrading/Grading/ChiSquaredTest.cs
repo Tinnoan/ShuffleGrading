@@ -8,6 +8,14 @@ namespace ShuffleGrading.Grading
 {
     public class ChiSquaredTest : IGradingMetric
     {
+        /// <summary>
+        /// This is a chi squared test. It calculates the chi squared statistic of the deck.
+        /// The chi squared statistic is calculated by dividing the deck into 4 sections and counting the number of cards in the top half of each section.
+        /// </summary>
+        public ChiSquaredTest()
+        {
+            
+        }
         public string? Name { get; } = "Chi Squared Test";
 
         public double Grade(int[] deck, bool[] origins)

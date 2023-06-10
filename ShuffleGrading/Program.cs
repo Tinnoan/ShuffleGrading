@@ -47,7 +47,7 @@ namespace ShuffleGrading
             return deck;
         }
 
-        static void ShuffleGrading(IShuffle shuffleMethod, int times, List<IGradingMetric> gradingMetrics)
+        static void ShuffleGrading(IShuffle shuffleMethod, int times, IReadOnlyCollection<IGradingMetric> gradingMetrics)
         {
             int[] deck = InitializeDeck();
 

@@ -26,7 +26,8 @@ namespace ShuffleGrading
                 //new ChiSquaredTest(),
                 //new DistributionDistance(),
                 //new PermutationTest(),
-                new SpearmanRankCorrelation(),
+                //new SpearmanRankCorrelation(),
+                new KendallsTau()
             };
 
             ShuffleGrading(new TopToBottomShuffle(), 5, gradingMetrics);

@@ -11,21 +11,22 @@ namespace ShuffleGrading
     {
         private const int DeckSize = 60;
         private const int Iterations = 10000;
-        private static readonly HashSet<Result> Results = new();
+        private static readonly HashSet<IResult> Results = new();
 
         static void Main(string[] args)
         {
             int[] deck = InitializeDeck();
             List<IGradingMetric> gradingMetrics = new List<IGradingMetric>
             {
-                new Entropy(5),
-                new RisingSequence(),
-                new InversionCount(),
-                new RiffleTest(),
-                new RunsTest(),
-                new ChiSquaredTest(),
-                new DistributionDistance(),
-                new PermutationTest()
+                //new Entropy(5),
+                //new RisingSequence(),
+                //new InversionCount(),
+                //new RiffleTest(),
+                //new RunsTest(),
+                //new ChiSquaredTest(),
+                //new DistributionDistance(),
+                //new PermutationTest(),
+                new SpearmanRankCorrelation(),
             };
 
             ShuffleGrading(new TopToBottomShuffle(), 5, gradingMetrics);

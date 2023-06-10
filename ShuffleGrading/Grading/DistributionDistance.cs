@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 namespace ShuffleGrading.Grading
 {
     /// <summary>
-    /// This is a distribution distance test. It calculates the distance between the original and shuffled decks.
+    /// This is a distribution of distances between card positions test. It calculates the distribution of distances between card positions.
     /// </summary>
     public class DistributionDistance : IGradingMetric
     {
+        public string? Name { get; } = "Distribution distance";
+
         public double Grade(int[] deck, bool[] origins)
         {
             int[] originalDeck = Enumerable.Range(0, deck.Length).ToArray();

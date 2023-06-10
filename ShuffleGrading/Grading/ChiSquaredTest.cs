@@ -8,6 +8,8 @@ namespace ShuffleGrading.Grading
 {
     public class ChiSquaredTest : IGradingMetric
     {
+        public string? Name { get; } = "Chi Squared Test";
+
         public double Grade(int[] deck, bool[] origins)
         {
             int numSections = 4;

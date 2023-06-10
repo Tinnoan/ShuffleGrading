@@ -13,7 +13,7 @@ namespace ShuffleGrading.ShuffleTypes
     {
         private static readonly Random Rng = new();
 
-        public string Name { get; } = "Perfect shuffle";
+        public string? Name { get; } = "Perfect shuffle";
 
         public void Shuffle(int[] deck, bool[] origins)
         {

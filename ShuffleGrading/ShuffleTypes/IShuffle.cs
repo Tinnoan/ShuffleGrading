@@ -2,7 +2,7 @@
 {
     internal interface IShuffle
     {
-        string Name { get; }
+        string? Name { get; }
         void Shuffle(int[] deck, bool[] origins);
     }
 }

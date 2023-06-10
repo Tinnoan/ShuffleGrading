@@ -17,14 +17,14 @@ namespace ShuffleGrading
             int[] deck = InitializeDeck();
             List<IGradingMetric> gradingMetrics = new List<IGradingMetric>
             {
-                //new Entropy(5),
-                //new RisingSequence(),
-                //new InversionCount(),
-                //new RiffleTest(),
-                //new RunsTest(),
-                //new ChiSquaredTest(),
-                //new DistributionDistance(),
-                new PermutationTest()
+                new Entropy(5),
+                new RisingSequence(),
+                new InversionCount(),
+                new RiffleTest(),
+                new RunsTest(),
+                new ChiSquaredTest(),
+                new DistributionDistance(),
+                //new PermutationTest()
             };
             //List<IGradingMetric> gradingMetrics = new List<IGradingMetric>
             //{
@@ -54,7 +54,7 @@ namespace ShuffleGrading
             foreach (var gradingMetric in gradingMetrics)
             {
                 var result = new Result();
-                List<double> scores = new List<double>();
+                List<double>? scores = new List<double>();
 
                 for (int i = 0; i < Iterations; i++)
                 {
@@ -75,31 +75,21 @@ namespace ShuffleGrading
                 result.Mean = scores.Average();
                 result.Median = Median(scores);
                 result.Name = shuffleMethod.Name;
-                result.GradingMetric = gradingMetric?.ToString();
+                result.GradingMetric = gradingMetric.Name;
                 result.StandardDeviation = CalculateStandardDeviation(scores);
                 result.Times = times;
+                result.Scores = scores;
                 Results.Add(result);
                 
-                Console.WriteLine("Shuffle method: " + result.Name);
-                Console.WriteLine("Grading method: " + result.GradingMetric);
-                Console.WriteLine("Max score: " + result.Max);
-                Console.WriteLine("Min score: " + result.Min);
-                Console.WriteLine("Mean score: " + result.Mean);
-                Console.WriteLine("Median score: " + result.Median); 
-                Console.WriteLine("Standard deviation: " + result.StandardDeviation);
-                Console.WriteLine("###");
+                PrintScore(result.Name, result.GradingMetric, result.Scores);
             }
         }
 
-        static void PrintScore(string shuffleMethod, string gradingMethod, List<double> scores)
+        static void PrintScore(string? shuffleMethod, string? gradingMethod, IReadOnlyCollection<double>? scores)
         {
-            Console.WriteLine("Shuffle method: " + shuffleMethod);
-            Console.WriteLine("Grading method: " + gradingMethod);
-            Console.WriteLine("Max score: " + scores.Max());
-            Console.WriteLine("Min score: " + scores.Max());
-            Console.WriteLine("Mean score: " + scores.Max());
-            Console.WriteLine("Median score: " + scores.Max());
-            Console.WriteLine("Standard deviation: " + scores.Max());
+            Console.WriteLine($"Shuffle method: {shuffleMethod} | Grading Method: {gradingMethod}");
+            Console.WriteLine($"Max score: {scores.Max()} | Min score: {scores.Min()} | Mean score: {scores.Average()} | Median score: {Median(scores)}");
+            Console.WriteLine($"Standard deviation: {CalculateStandardDeviation(scores)}");
             Console.WriteLine("###");
         }
 
@@ -144,7 +134,7 @@ namespace ShuffleGrading
         }
 
 
-        static double Median(List<double> scores)
+        static double Median(IReadOnlyCollection<double>? scores)
         {
             int numberCount = scores.Count();
             int halfIndex = numberCount / 2;
@@ -161,7 +151,7 @@ namespace ShuffleGrading
             }
             return median;
         }
-        public static double CalculateStandardDeviation(List<double> values)
+        public static double CalculateStandardDeviation(IReadOnlyCollection<double>? values)
         {
             double mean = values.Average();
             double sumOfSquaresOfDifferences = values.Select(val => (val - mean) * (val - mean)).Sum();
@@ -172,7 +162,7 @@ namespace ShuffleGrading
 
         public class Result : IResult
         {
-            public string Name { get; set; }
+            public string? Name { get; set; }
             public int Permutations { get; set; }
             public int Times { get; set; }
             public double Max { get; set; }
@@ -181,17 +171,21 @@ namespace ShuffleGrading
             public double Median { get; set; }
             public string? GradingMetric { get; set; }
             public double StandardDeviation { get; set; }
+            public List<double>? Scores { get; set; }
         }
     }
 
     internal interface IResult
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int Permutations { get; set; }
         public int Times { get; set; }
         public double Max { get; set; }
         public double Min { get; set; }
         public double Mean { get; set; }
         public double Median { get; set; }
+        public string? GradingMetric { get; set; }
+        public double StandardDeviation { get; set; }
+        public List<double>? Scores { get; set; }
     }
 }

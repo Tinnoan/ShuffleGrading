@@ -11,7 +11,7 @@ namespace ShuffleGrading.ShuffleTypes
     /// </summary>
     internal class TopToBottomShuffle : IShuffle
     {
-        public string Name { get; } = "Top-to-bottom shuffle";
+        public string? Name { get; } = "Top-to-bottom shuffle";
 
         public void Shuffle(int[] deck, bool[] origins)
         {

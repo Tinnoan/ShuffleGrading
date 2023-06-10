@@ -12,6 +12,8 @@ namespace ShuffleGrading.Grading
     /// </summary>
     public class RiffleTest : IGradingMetric
     {
+        public string? Name { get; } = "Riffle Test";
+
         public double Grade(int[] deck, bool[] origins)
         {
             int switches = 0;

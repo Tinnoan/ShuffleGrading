@@ -12,6 +12,8 @@ namespace ShuffleGrading.Grading
     /// </summary>
     public class RunsTest : IGradingMetric
     {
+        public string? Name { get; } = "Runs Test";
+
         public double Grade(int[] deck, bool[] origins)
         {
             int runs = 0;

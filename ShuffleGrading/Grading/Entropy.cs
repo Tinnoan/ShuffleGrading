@@ -19,6 +19,8 @@ namespace ShuffleGrading.Grading
             this.length = length;
         }
 
+        public string? Name { get; } = "Entropy";
+
         public double Grade(int[] deck, bool[] origins)
         {
             List<int[]> permutations = PermutationEntropy.GeneratePermutations(deck, length);

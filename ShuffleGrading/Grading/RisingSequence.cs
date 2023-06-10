@@ -12,6 +12,8 @@ namespace ShuffleGrading.Grading
     /// </summary>
     public class RisingSequence : IGradingMetric
     {
+        public string? Name { get; } = "Rising Sequence";
+
         public double Grade(int[] deck, bool[] origins)
         {
             int risingSequences = 1;  // The first card starts a sequence

@@ -5,7 +5,7 @@
     /// </summary>
     internal class PerfectRiffleShuffle : IShuffle
     {
-        public string Name { get; } = "Perfect Riffle Shuffle";
+        public string? Name { get; } = "Perfect Riffle Shuffle";
 
         public void Shuffle(int[] deck, bool[] origins)
         {

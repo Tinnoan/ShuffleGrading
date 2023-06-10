@@ -7,7 +7,7 @@
     {
         private static readonly Random Rng = new();
 
-        public string Name { get; } = "Riffle Shuffle";
+        public string? Name { get; } = "Riffle Shuffle";
 
         public void Shuffle(int[] deck, bool[] origins)
         {

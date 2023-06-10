@@ -10,7 +10,7 @@ namespace ShuffleGrading
     class Program
     {
         private const int DeckSize = 10;
-        private const int Iterations = 10000;
+        private const int Iterations = 10;
         private static readonly HashSet<Result> Results = new();
 
         static void Main(string[] args)
@@ -18,14 +18,14 @@ namespace ShuffleGrading
             int[] deck = InitializeDeck();
             List<IGradingMetric> gradingMetrics = new List<IGradingMetric>
             {
-                new Entropy(5),
-                new RisingSequence(),
-                new InversionCount(),
-                new RiffleTest(),
-                new RunsTest(),
-                new ChiSquaredTest(),
-                new DistributionDistance(),
-                //new PermutationTest()
+                //new Entropy(5),
+                //new RisingSequence(),
+                //new InversionCount(),
+                //new RiffleTest(),
+                //new RunsTest(),
+                //new ChiSquaredTest(),
+                //new DistributionDistance(),
+                new PermutationTest()
             };
             //List<IGradingMetric> gradingMetrics = new List<IGradingMetric>
             //{

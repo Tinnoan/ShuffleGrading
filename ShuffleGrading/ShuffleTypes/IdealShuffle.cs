@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 namespace ShuffleGrading.ShuffleTypes
 {
     /// <summary>
-    /// This is a perfect shuffle. Using the Fisher-Yates algorithm, it shuffles the deck in O(n) time.
+    /// This is an ideal shuffle. Using the Fisher-Yates algorithm, it shuffles the deck in O(n) time.
     /// </summary>
-    internal class PerfectShuffle : IShuffle
+    internal class IdealShuffle : IShuffle
     {
         private static readonly Random Rng = new();
 
-        public string? Name { get; } = "Perfect shuffle";
+        public string? Name { get; } = "Ideal shuffle";
 
         public void Shuffle(int[] deck, bool[] origins)
         {

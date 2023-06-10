@@ -9,7 +9,7 @@ namespace ShuffleGrading.ShuffleTypes
     /// <summary>
     /// This is a top-to-bottom shuffle. It moves the top card to the bottom of the deck. It is meant as an example of a bad shuffle.
     /// </summary>
-    public class TopToBottomShuffle : IShuffle
+    public class TopToBottom : IShuffle
     {
         public string? Name { get; } = "Top-to-bottom shuffle";
 

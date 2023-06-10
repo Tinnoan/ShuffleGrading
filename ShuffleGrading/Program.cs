@@ -18,22 +18,23 @@ namespace ShuffleGrading
             int[] deck = InitializeDeck();
             List<IGradingMetric> gradingMetrics = new List<IGradingMetric>
             {
-                //new Entropy(5),
-                //new RisingSequence(),
-                //new InversionCount(),
-                //new RiffleTest(),
-                //new RunsTest(),
-                //new ChiSquaredTest(),
-                //new DistributionDistance(),
-                //new PermutationTest(),
-                //new SpearmanRankCorrelation(),
+                new Entropy(5),
+                new RisingSequence(),
+                new InversionCount(),
+                new RiffleTest(),
+                new RunsTest(),
+                new ChiSquaredTest(),
+                new DistributionDistance(),
+                new PermutationTest(),
+                new SpearmanRankCorrelation(),
                 new KendallsTau()
             };
 
-            ShuffleGrading(new TopToBottomShuffle(), 5, gradingMetrics);
-            ShuffleGrading(new IdealShuffle(), 5, gradingMetrics);
-            ShuffleGrading(new PerfectRiffleShuffle(), 5, gradingMetrics);
-            ShuffleGrading(new RiffleShuffle(), 5, gradingMetrics);
+            //ShuffleGrading(new TopToBottom(), 5, gradingMetrics);
+            //ShuffleGrading(new Ideal(), 5, gradingMetrics);
+            //ShuffleGrading(new PerfectRiffle(), 5, gradingMetrics);
+            //ShuffleGrading(new Riffle(), 5, gradingMetrics);
+            ShuffleGrading(new Overhand(), 5, gradingMetrics);
 
             Console.ReadLine();
         }

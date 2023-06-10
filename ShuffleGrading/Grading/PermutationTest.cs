@@ -19,15 +19,15 @@ namespace ShuffleGrading.Grading
             
         }
         public string? Name { get; } = "Permutation Test";
-        public double Grade(int[] deck, bool[] origins)
+        public double Grade(int[] deck, bool[] origins, int[] originalDeck)
         {
-            int observedDifference = CountDifferences(deck, origins);
+            int observedDifference = CountDifferences(deck);
 
             int countGreater = 0;
             for (int i = 0; i < numPermutations; i++)
             {
-                int[] permutedPositions = Permute(Enumerable.Range(0, deck.Length).ToArray());
-                int permutedDifference = CountDifferences(permutedPositions, origins);
+                int[] permutedDeck = Permute(deck);
+                int permutedDifference = CountDifferences(permutedDeck);
                 if (permutedDifference >= observedDifference)
                 {
                     countGreater++;
@@ -38,12 +38,12 @@ namespace ShuffleGrading.Grading
             return pValue;
         }
 
-        private int CountDifferences(int[] deck, bool[] origins)
+        private int CountDifferences(int[] deck)
         {
             int count = 0;
             for (int i = 0; i < deck.Length; i++)
             {
-                if ((deck[i] < deck.Length / 2) != origins[i])
+                if (deck[i] != i + 1) // Notice the change here
                 {
                     count++;
                 }
@@ -57,9 +57,7 @@ namespace ShuffleGrading.Grading
             for (int i = copy.Length - 1; i > 0; i--)
             {
                 int j = random.Next(i + 1);
-                int temp = copy[i];
-                copy[i] = copy[j];
-                copy[j] = temp;
+                (copy[i], copy[j]) = (copy[j], copy[i]);
             }
             return copy;
         }

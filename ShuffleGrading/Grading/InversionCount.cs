@@ -18,7 +18,7 @@ namespace ShuffleGrading.Grading
         }
         public string? Name { get; } = "Inversion Count";
 
-        public double Grade(int[] deck, bool[] origins)
+        public double Grade(int[] deck, bool[] origins, int[] originalDeck)
         {
             int inversions = 0;
             for (int i = 0; i < deck.Length; i++)

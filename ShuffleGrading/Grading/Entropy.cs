@@ -21,7 +21,7 @@ namespace ShuffleGrading.Grading
 
         public string? Name { get; } = "Entropy";
 
-        public double Grade(int[] deck, bool[] origins)
+        public double Grade(int[] deck, bool[] origins, int[] originalDeck)
         {
             List<int[]> permutations = GeneratePermutations(deck, length);
             CountPermutations(permutations);

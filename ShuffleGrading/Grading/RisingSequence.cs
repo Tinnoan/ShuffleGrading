@@ -18,7 +18,7 @@ namespace ShuffleGrading.Grading
         }
         public string? Name { get; } = "Rising Sequence";
 
-        public double Grade(int[] deck, bool[] origins)
+        public double Grade(int[] deck, bool[] origins, int[] originalDeck)
         {
             int risingSequences = 1;  // The first card starts a sequence
             for (int i = 1; i < deck.Length; i++)

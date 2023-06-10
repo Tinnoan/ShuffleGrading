@@ -18,7 +18,7 @@ namespace ShuffleGrading.Grading
         }
         public string? Name { get; } = "Chi Squared Test";
 
-        public double Grade(int[] deck, bool[] origins)
+        public double Grade(int[] deck, bool[] origins, int[] originalDeck)
         {
             int numSections = 4;
             int sectionSize = deck.Length / numSections;
@@ -38,17 +38,6 @@ namespace ShuffleGrading.Grading
             }
 
             return chiSquareStatistic;
-        }
-
-        public double ChiSqTest(int[] observed, double[] expected)
-        {
-            double sum = 0.0;
-            for (int i = 0; i < observed.Length; i++)
-            {
-                double diff = observed[i] - expected[i];
-                sum += (diff * diff) / expected[i];
-            }
-            return sum;
         }
     }
 }

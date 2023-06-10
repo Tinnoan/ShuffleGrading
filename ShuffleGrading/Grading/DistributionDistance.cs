@@ -17,13 +17,13 @@ namespace ShuffleGrading.Grading
         }
         public string? Name { get; } = "Distribution distance";
 
-        public double Grade(int[] deck, bool[] origins)
+        public double Grade(int[] deck, bool[] origins, int[] originalDeck)
         {
-            int[] originalDeck = Enumerable.Range(0, deck.Length).ToArray();
+            int[] oDeck = Enumerable.Range(0, deck.Length).ToArray();
             int[] distances = new int[deck.Length];
             for (int i = 0; i < deck.Length; i++)
             {
-                int originalPosition = Array.IndexOf(originalDeck, deck[i]);
+                int originalPosition = Array.IndexOf(oDeck, deck[i]);
                 int shuffledPosition = i;
                 distances[i] = Math.Abs(originalPosition - shuffledPosition);
             }

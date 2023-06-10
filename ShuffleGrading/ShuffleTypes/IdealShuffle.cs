@@ -9,7 +9,7 @@ namespace ShuffleGrading.ShuffleTypes
     /// <summary>
     /// This is an ideal shuffle. Using the Fisher-Yates algorithm, it shuffles the deck in O(n) time.
     /// </summary>
-    internal class IdealShuffle : IShuffle
+    public class IdealShuffle : IShuffle
     {
         private static readonly Random Rng = new();
 

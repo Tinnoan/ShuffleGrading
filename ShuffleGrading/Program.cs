@@ -9,8 +9,8 @@ namespace ShuffleGrading
 {
     class Program
     {
-        private const int DeckSize = 10;
-        private const int Iterations = 10;
+        private const int DeckSize = 60;
+        private const int Iterations = 10000;
         private static readonly HashSet<Result> Results = new();
 
         static void Main(string[] args)
@@ -18,22 +18,18 @@ namespace ShuffleGrading
             int[] deck = InitializeDeck();
             List<IGradingMetric> gradingMetrics = new List<IGradingMetric>
             {
-                //new Entropy(5),
-                //new RisingSequence(),
-                //new InversionCount(),
-                //new RiffleTest(),
-                //new RunsTest(),
-                //new ChiSquaredTest(),
-                //new DistributionDistance(),
+                new Entropy(5),
+                new RisingSequence(),
+                new InversionCount(),
+                new RiffleTest(),
+                new RunsTest(),
+                new ChiSquaredTest(),
+                new DistributionDistance(),
                 new PermutationTest()
             };
-            //List<IGradingMetric> gradingMetrics = new List<IGradingMetric>
-            //{
-            //    new InversionCount()
-            //};
 
             ShuffleGrading(new TopToBottomShuffle(), 5, gradingMetrics);
-            ShuffleGrading(new PerfectShuffle(), 5, gradingMetrics);
+            ShuffleGrading(new IdealShuffle(), 5, gradingMetrics);
             ShuffleGrading(new PerfectRiffleShuffle(), 5, gradingMetrics);
             ShuffleGrading(new RiffleShuffle(), 5, gradingMetrics);
 
@@ -48,9 +44,10 @@ namespace ShuffleGrading
             return deck;
         }
 
-        static void ShuffleGrading(IShuffle shuffleMethod, int times, IReadOnlyCollection<IGradingMetric> gradingMetrics)
+        static void ShuffleGrading(IShuffle shuffleType, int times, IReadOnlyCollection<IGradingMetric> gradingMetrics)
         {
             int[] deck = InitializeDeck();
+            int[] originalDeck = (int[])deck.Clone();
 
             foreach (var gradingMetric in gradingMetrics)
             {
@@ -64,8 +61,8 @@ namespace ShuffleGrading
                     {
                         origins[j] = true; // or false, doesn't really matter as long as it's consistent
                     }
-                    Shuffle(deck, origins, shuffleMethod.Shuffle, times);
-                    scores.Add(gradingMetric.Grade(deck, origins));
+                    Shuffle(deck, origins, shuffleType.Shuffle, times);
+                    scores.Add(gradingMetric.Grade(deck, origins, originalDeck));
                     ResetDeck(deck);
                     ResetOrigins(origins);
                     //PrintScore(shuffleMethod.Method.Name, gradingMetric.ToString(), scores);
@@ -75,7 +72,7 @@ namespace ShuffleGrading
                 result.Min = scores.Min();
                 result.Mean = scores.Average();
                 result.Median = Median(scores);
-                result.Name = shuffleMethod.Name;
+                result.Name = shuffleType.Name;
                 result.GradingMetric = gradingMetric.Name;
                 result.StandardDeviation = CalculateStandardDeviation(scores);
                 result.Times = times;

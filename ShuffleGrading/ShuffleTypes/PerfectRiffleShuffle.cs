@@ -3,7 +3,7 @@
     /// <summary>
     /// This is a perfect riffle shuffle. It splits the deck into two halves, then interleaves the cards from the two halves.
     /// </summary>
-    internal class PerfectRiffleShuffle : IShuffle
+    public class PerfectRiffleShuffle : IShuffle
     {
         public string? Name { get; } = "Perfect Riffle Shuffle";
 

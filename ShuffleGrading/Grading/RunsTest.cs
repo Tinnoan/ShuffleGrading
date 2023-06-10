@@ -18,7 +18,7 @@ namespace ShuffleGrading.Grading
         }
         public string? Name { get; } = "Runs Test";
 
-        public double Grade(int[] deck, bool[] origins)
+        public double Grade(int[] deck, bool[] origins, int[] originalDeck)
         {
             int runs = 0;
             for (int i = 0; i < deck.Length - 1; i++)

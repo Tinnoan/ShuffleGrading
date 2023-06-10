@@ -18,7 +18,7 @@ namespace ShuffleGrading.Grading
         }
         public string? Name { get; } = "Riffle Test";
 
-        public double Grade(int[] deck, bool[] origins)
+        public double Grade(int[] deck, bool[] origins, int[] originalDeck)
         {
             int switches = 0;
             for (int i = 1; i < deck.Length; i++)

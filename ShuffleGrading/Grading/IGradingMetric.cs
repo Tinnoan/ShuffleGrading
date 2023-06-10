@@ -9,6 +9,6 @@ namespace ShuffleGrading.Grading
     public interface IGradingMetric
     {
         string? Name { get; }
-        double Grade(int[] deck, bool[] origins);
+        double Grade(int[] deck, bool[] origins, int[] originalDeck);
     }
 }

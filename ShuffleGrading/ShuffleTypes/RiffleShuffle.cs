@@ -3,7 +3,7 @@
     /// <summary>
     /// This is a riffle shuffle. It splits the deck into two halves, then randomly interleaves the cards from the two halves.
     /// </summary>
-    internal class RiffleShuffle : IShuffle
+    public class RiffleShuffle : IShuffle
     {
         private static readonly Random Rng = new();
 

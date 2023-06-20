@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 using ShuffleGrading.Grading;
+using ShuffleGrading.Helpers;
 using ShuffleGrading.Results;
 using ShuffleGrading.ShuffleTypes;
 using ShuffleGrading.Training;
@@ -12,7 +13,7 @@ namespace ShuffleGrading
     class Program
     {
         private const int DeckSize = 60;
-        private const int Iterations = 1000;
+        private const int Iterations = 1000000;
         private static readonly HashSet<IResult> Results = new();
         private static Random _random = new();
 
@@ -45,7 +46,7 @@ namespace ShuffleGrading
             //ShuffleGrading(new PerfectRiffle(), 5, gradingMetrics);
             //ShuffleGrading(new Riffle(), 5, gradingMetrics);
             //ShuffleGrading(new Overhand(), 5, gradingMetrics);
-            ShuffleWriteData(shuffleTypes, 5, new CSVWriter());
+            ShuffleWriteData(shuffleTypes, 5, new CSVWriter(), new StringBuilderOutputWriter());
 
             Console.ReadLine();
         }
@@ -105,14 +106,14 @@ namespace ShuffleGrading
             }
         }
 
-        static void ShuffleWriteData(IShuffle[] shuffleTypes, int times, IDataWriter dataWriter)
+        static void ShuffleWriteData(IShuffle[] shuffleTypes, int times, IDataWriter dataWriter, IOutputWriter writer)
         {
-            StringBuilder writer = new StringBuilder();
-            int[] deck = InitializeDeck(true);
-            int[] originalDeck = (int[])deck.Clone();
+            dataWriter.WriteHeader(writer, "ShuffleMethod,ShuffledDeck,OriginalDeck,numOfShuffles,deckSize");  // header);
 
             for (int i = 0; i < Iterations; i++)
             {
+                int[] deck = InitializeDeck(true);
+                int[] originalDeck = (int[])deck.Clone();
                 IShuffle shuffleType = shuffleTypes[_random.Next(0, shuffleTypes.Length)];
                 var origins = new bool[deck.Length];
                 for (int j = 0; j < origins.Length / 2; j++)
@@ -121,11 +122,13 @@ namespace ShuffleGrading
                 }
 
                 Shuffle(deck, origins, shuffleType.Shuffle, times);
-                dataWriter.WriteHeader(writer, "ShuffleMethod,ShuffledDeck,OriginalDeck,numOfShuffles,deckSize");  // header);
                 dataWriter.Write(writer, shuffleType.Name, deck, originalDeck, times, deck.Length, null);
 
                 ResetDeck(deck);
                 ResetOrigins(origins);
+
+                double percentComplete = ((double) (i + 1) / Iterations) * 100;
+                Console.Write($"\rProgress: {percentComplete:F2}%");
             }
 
             dataWriter.Save(writer);

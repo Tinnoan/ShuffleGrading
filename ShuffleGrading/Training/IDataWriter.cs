@@ -4,15 +4,16 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ShuffleGrading.Helpers;
 
 namespace ShuffleGrading.Training
 {
     public interface IDataWriter
     {
-        void Write(StringBuilder writer,string? shuffleMethod, int[] shuffledDeck, int[] originalDeck, int numOfShuffles, int deckSize, object[]? parameters);
+        void Write(IOutputWriter writer,string? shuffleMethod, int[] shuffledDeck, int[] originalDeck, int numOfShuffles, int deckSize, object[]? parameters);
 
-        void WriteHeader(StringBuilder writer, string header);
+        void WriteHeader(IOutputWriter writer, string header);
 
-        void Save(StringBuilder writer);
+        void Save(IOutputWriter writer);
     }
 }

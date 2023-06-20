@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShuffleGrading.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -9,7 +10,7 @@ namespace ShuffleGrading.Training
 {
     public class CSVWriter : IDataWriter
     {
-        public void Write(StringBuilder writer, string? shuffleMethod, int[] shuffledDeck, int[] originalDeck, int numOfShuffles, int deckSize,
+        public void Write(IOutputWriter writer, string? shuffleMethod, int[] shuffledDeck, int[] originalDeck, int numOfShuffles, int deckSize,
             object[]? parameters)
         {
             if (shuffledDeck.Length != originalDeck.Length)
@@ -33,14 +34,15 @@ namespace ShuffleGrading.Training
             writer.AppendLine();
         }
 
-        public void WriteHeader(StringBuilder writer, string header)
+        public void WriteHeader(IOutputWriter writer, string header)
         {
             writer.AppendLine(header);
         }
 
-        public void Save(StringBuilder writer)
+        public void Save(IOutputWriter writer)
         {
-            File.WriteAllText("training_data.csv", writer.ToString());
+            string filename = $"training_data_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
+            writer.Save(filename);
         }
     }
 }

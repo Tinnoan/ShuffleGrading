@@ -13,7 +13,7 @@ namespace ShuffleGrading.ShuffleTypes
     {
         public string? Name { get; } = "Top-to-bottom shuffle";
 
-        public void Shuffle(int[] deck, bool[] origins)
+        public void Shuffle(int[] deck, bool[]? origins)
         {
             int topCard = deck[0];
             bool topOrigin = origins[0];

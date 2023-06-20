@@ -18,7 +18,7 @@ namespace ShuffleGrading.ShuffleTypes
         private readonly Random _random = new();
         public string? Name => "Overhand Shuffle";
 
-        public void Shuffle(int[] deck, bool[] origins)
+        public void Shuffle(int[] deck, bool[]? origins)
         {
             Random random = new Random();
             int n = deck.Length;

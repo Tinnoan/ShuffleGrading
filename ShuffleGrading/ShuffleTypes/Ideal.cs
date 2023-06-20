@@ -15,7 +15,7 @@ namespace ShuffleGrading.ShuffleTypes
 
         public string? Name { get; } = "Ideal shuffle";
 
-        public void Shuffle(int[] deck, bool[] origins)
+        public void Shuffle(int[] deck, bool[]? origins)
         {
             int n = deck.Length;
             while (n > 1)
@@ -26,6 +26,7 @@ namespace ShuffleGrading.ShuffleTypes
                 // Swap the cards.
                 (deck[k], deck[n]) = (deck[n], deck[k]);
 
+                if (origins == null) continue;
                 // Swap the origins.
                 (origins[k], origins[n]) = (origins[n], origins[k]);
             }

@@ -7,7 +7,7 @@
     {
         public string? Name { get; } = "Perfect Riffle Shuffle";
 
-        public void Shuffle(int[] deck, bool[] origins)
+        public void Shuffle(int[] deck, bool[]? origins)
         {
             int n = deck.Length;
             int[] tempDeck = new int[n];

@@ -1,8 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using ShuffleGrading.Grading;
 using ShuffleGrading.Results;
 using ShuffleGrading.ShuffleTypes;
+using ShuffleGrading.Training;
 using static ShuffleGrading.Program;
 
 namespace ShuffleGrading
@@ -10,8 +12,9 @@ namespace ShuffleGrading
     class Program
     {
         private const int DeckSize = 60;
-        private const int Iterations = 10000;
+        private const int Iterations = 1000;
         private static readonly HashSet<IResult> Results = new();
+        private static Random _random = new();
 
         static void Main(string[] args)
         {
@@ -29,21 +32,37 @@ namespace ShuffleGrading
                 new SpearmanRankCorrelation(),
                 new KendallsTau()
             };
+            IShuffle[] shuffleTypes = {
+                new TopToBottom(),
+                new Ideal(),
+                new PerfectRiffle(),
+                new Riffle(),
+                new Overhand()
+            };
 
             //ShuffleGrading(new TopToBottom(), 5, gradingMetrics);
             //ShuffleGrading(new Ideal(), 5, gradingMetrics);
             //ShuffleGrading(new PerfectRiffle(), 5, gradingMetrics);
             //ShuffleGrading(new Riffle(), 5, gradingMetrics);
-            ShuffleGrading(new Overhand(), 5, gradingMetrics);
+            //ShuffleGrading(new Overhand(), 5, gradingMetrics);
+            ShuffleWriteData(shuffleTypes, 5, new CSVWriter());
 
             Console.ReadLine();
         }
 
-        static int[] InitializeDeck()
+        static int[] InitializeDeck(bool random = false)
         {
             int[] deck = new int[DeckSize];
+
             for (int i = 0; i < DeckSize; i++)
                 deck[i] = i + 1;
+
+            if (random)
+            {
+                Ideal idealShuffle = new();
+                idealShuffle.Shuffle(deck, null);
+            }
+
             return deck;
         }
 
@@ -84,6 +103,32 @@ namespace ShuffleGrading
                 
                 PrintScore(result.Name, result.GradingMetric, result.Scores);
             }
+        }
+
+        static void ShuffleWriteData(IShuffle[] shuffleTypes, int times, IDataWriter dataWriter)
+        {
+            StringBuilder writer = new StringBuilder();
+            int[] deck = InitializeDeck(true);
+            int[] originalDeck = (int[])deck.Clone();
+
+            for (int i = 0; i < Iterations; i++)
+            {
+                IShuffle shuffleType = shuffleTypes[_random.Next(0, shuffleTypes.Length)];
+                var origins = new bool[deck.Length];
+                for (int j = 0; j < origins.Length / 2; j++)
+                {
+                    origins[j] = true; // or false, doesn't really matter as long as it's consistent
+                }
+
+                Shuffle(deck, origins, shuffleType.Shuffle, times);
+                dataWriter.WriteHeader(writer, "ShuffleMethod,ShuffledDeck,OriginalDeck,numOfShuffles,deckSize");  // header);
+                dataWriter.Write(writer, shuffleType.Name, deck, originalDeck, times, deck.Length, null);
+
+                ResetDeck(deck);
+                ResetOrigins(origins);
+            }
+
+            dataWriter.Save(writer);
         }
 
         static void PrintScore(string? shuffleMethod, string? gradingMethod, IReadOnlyCollection<double>? scores)

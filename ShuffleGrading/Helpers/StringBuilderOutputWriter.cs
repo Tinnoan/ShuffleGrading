@@ -38,6 +38,11 @@ namespace ShuffleGrading.Helpers
         {
             File.WriteAllText(filename, _builder.ToString());
         }
+
+        public void Dispose()
+        {
+            _builder.Clear();
+        }
     }
 
 }

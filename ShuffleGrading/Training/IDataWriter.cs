@@ -14,6 +14,6 @@ namespace ShuffleGrading.Training
 
         void WriteHeader(IOutputWriter writer, string header);
 
-        void Save(IOutputWriter writer);
+        void Save(IOutputWriter writer, string filename);
     }
 }

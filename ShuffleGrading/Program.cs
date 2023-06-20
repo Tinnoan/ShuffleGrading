@@ -13,13 +13,12 @@ namespace ShuffleGrading
     class Program
     {
         private const int DeckSize = 60;
-        private const int Iterations = 1000000;
+        private const int Iterations = 10000000;
         private static readonly HashSet<IResult> Results = new();
         private static Random _random = new();
 
         static void Main(string[] args)
         {
-            int[] deck = InitializeDeck();
             List<IGradingMetric> gradingMetrics = new List<IGradingMetric>
             {
                 new Entropy(5),
@@ -46,16 +45,22 @@ namespace ShuffleGrading
             //ShuffleGrading(new PerfectRiffle(), 5, gradingMetrics);
             //ShuffleGrading(new Riffle(), 5, gradingMetrics);
             //ShuffleGrading(new Overhand(), 5, gradingMetrics);
-            ShuffleWriteData(shuffleTypes, 5, new CSVWriter(), new StringBuilderOutputWriter());
+            //ShuffleWriteData(shuffleTypes, 5, new CSVWriter(), new StringBuilderOutputWriter());
+            
+            string filename = $"training_data_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
+            using (IOutputWriter writer = new StreamOutputWriter(filename))
+            {
+                ShuffleWriteData(shuffleTypes, 5, new CSVWriter(), writer, filename);
+            }
 
             Console.ReadLine();
         }
 
-        static int[] InitializeDeck(bool random = false)
+        static int[] InitializeDeck(int deckSize, bool random = false)
         {
-            int[] deck = new int[DeckSize];
+            int[] deck = new int[deckSize];
 
-            for (int i = 0; i < DeckSize; i++)
+            for (int i = 0; i < deckSize; i++)
                 deck[i] = i + 1;
 
             if (random)
@@ -69,7 +74,7 @@ namespace ShuffleGrading
 
         static void ShuffleGrading(IShuffle shuffleType, int times, IReadOnlyCollection<IGradingMetric> gradingMetrics)
         {
-            int[] deck = InitializeDeck();
+            int[] deck = InitializeDeck(DeckSize);
             int[] originalDeck = (int[])deck.Clone();
 
             foreach (var gradingMetric in gradingMetrics)
@@ -106,13 +111,13 @@ namespace ShuffleGrading
             }
         }
 
-        static void ShuffleWriteData(IShuffle[] shuffleTypes, int times, IDataWriter dataWriter, IOutputWriter writer)
+        static void ShuffleWriteData(IShuffle[] shuffleTypes, int times, IDataWriter dataWriter, IOutputWriter writer, string filename)
         {
             dataWriter.WriteHeader(writer, "ShuffleMethod,ShuffledDeck,OriginalDeck,numOfShuffles,deckSize");  // header);
 
             for (int i = 0; i < Iterations; i++)
             {
-                int[] deck = InitializeDeck(true);
+                int[] deck = InitializeDeck(_random.Next(2, 99), true);
                 int[] originalDeck = (int[])deck.Clone();
                 IShuffle shuffleType = shuffleTypes[_random.Next(0, shuffleTypes.Length)];
                 var origins = new bool[deck.Length];
@@ -124,14 +129,11 @@ namespace ShuffleGrading
                 Shuffle(deck, origins, shuffleType.Shuffle, times);
                 dataWriter.Write(writer, shuffleType.Name, deck, originalDeck, times, deck.Length, null);
 
-                ResetDeck(deck);
-                ResetOrigins(origins);
-
                 double percentComplete = ((double) (i + 1) / Iterations) * 100;
                 Console.Write($"\rProgress: {percentComplete:F2}%");
             }
 
-            dataWriter.Save(writer);
+            dataWriter.Save(writer, filename);
         }
 
         static void PrintScore(string? shuffleMethod, string? gradingMethod, IReadOnlyCollection<double>? scores)
@@ -155,7 +157,7 @@ namespace ShuffleGrading
 
         static void ResetDeck(int[] deck)
         {
-            for (int i = 0; i < DeckSize; i++)
+            for (int i = 0; i < deck.Length; i++)
                 deck[i] = i + 1;
         }
 

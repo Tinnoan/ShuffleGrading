@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShuffleGrading.Helpers
 {
-    public interface IOutputWriter
+    public interface IOutputWriter : IDisposable
     {
         void AppendLine();
         void AppendLine<T>(T? value);

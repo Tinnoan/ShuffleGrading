@@ -39,9 +39,8 @@ namespace ShuffleGrading.Training
             writer.AppendLine(header);
         }
 
-        public void Save(IOutputWriter writer)
+        public void Save(IOutputWriter writer, string filename)
         {
-            string filename = $"training_data_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
             writer.Save(filename);
         }
     }

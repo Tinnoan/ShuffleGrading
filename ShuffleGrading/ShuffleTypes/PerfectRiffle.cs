@@ -1,10 +1,14 @@
 ﻿namespace ShuffleGrading.ShuffleTypes
 {
-    /// <summary>
-    /// This is a perfect riffle shuffle. It splits the deck into two halves, then interleaves the cards from the two halves.
-    /// </summary>
     public class PerfectRiffle : IShuffle
     {
+        /// <summary>
+        /// This is a perfect riffle shuffle. It splits the deck into two halves, then interleaves the cards from the two halves.
+        /// </summary>
+        public PerfectRiffle()
+        {
+            
+        }
         public string? Name { get; } = "Perfect Riffle Shuffle";
 
         public void Shuffle(int[] deck, bool[]? origins)

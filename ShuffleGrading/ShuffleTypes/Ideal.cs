@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace ShuffleGrading.ShuffleTypes
 {
-    /// <summary>
-    /// This is an ideal shuffle. Using the Fisher-Yates algorithm, it shuffles the deck in O(n) time.
-    /// </summary>
     public class Ideal : IShuffle
     {
+        /// <summary>
+        /// This is an ideal shuffle. Using the Fisher-Yates algorithm, it shuffles the deck in O(n) time.
+        /// </summary>
+        public Ideal()
+        {
+            
+        }
         private static readonly Random Rng = new();
 
         public string? Name { get; } = "Ideal shuffle";

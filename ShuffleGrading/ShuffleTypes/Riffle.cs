@@ -1,10 +1,14 @@
 ﻿namespace ShuffleGrading.ShuffleTypes
 {
-    /// <summary>
-    /// This is a riffle shuffle. It splits the deck into two halves, then randomly interleaves the cards from the two halves.
-    /// </summary>
     public class Riffle : IShuffle
     {
+        /// <summary>
+        /// This is a riffle shuffle. It splits the deck into two halves, then randomly interleaves the cards from the two halves.
+        /// </summary>
+        public Riffle()
+        {
+            
+        }
         private static readonly Random Rng = new();
 
         public string? Name { get; } = "Riffle Shuffle";

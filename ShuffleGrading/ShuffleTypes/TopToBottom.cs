@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace ShuffleGrading.ShuffleTypes
 {
-    /// <summary>
-    /// This is a top-to-bottom shuffle. It moves the top card to the bottom of the deck. It is meant as an example of a bad shuffle.
-    /// </summary>
     public class TopToBottom : IShuffle
     {
+        /// <summary>
+        /// This is a top-to-bottom shuffle. It moves the top card to the bottom of the deck. It is meant as an example of a bad shuffle.
+        /// </summary>
+        public TopToBottom()
+        {
+            
+        }
         public string? Name { get; } = "Top-to-bottom shuffle";
 
         public void Shuffle(int[] deck, bool[]? origins)

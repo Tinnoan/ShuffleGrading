@@ -13,7 +13,7 @@ namespace ShuffleGrading
     class Program
     {
         private const int DeckSize = 60;
-        private const int Iterations = 10000000;
+        private const int Iterations = 10000;
         private static readonly HashSet<IResult> Results = new();
         private static Random _random = new();
 
@@ -37,7 +37,19 @@ namespace ShuffleGrading
                 new Ideal(),
                 new PerfectRiffle(),
                 new Riffle(),
-                new Overhand()
+                new Overhand(),
+                new Pile(2),
+                new Pile(3),
+                new Pile(4),
+                new Pile(5),
+                new Pile(6),
+                new Pile(7),
+                new RandomPile(2),
+                new RandomPile(3),
+                new RandomPile(4),
+                new RandomPile(5),
+                new RandomPile(6),
+                new RandomPile(7),
             };
 
             //ShuffleGrading(new TopToBottom(), 5, gradingMetrics);
@@ -45,13 +57,30 @@ namespace ShuffleGrading
             //ShuffleGrading(new PerfectRiffle(), 5, gradingMetrics);
             //ShuffleGrading(new Riffle(), 5, gradingMetrics);
             //ShuffleGrading(new Overhand(), 5, gradingMetrics);
+            //ShuffleGrading(new Pile(2), 5, gradingMetrics);
+            //ShuffleGrading(new Pile(3), 5, gradingMetrics);
+            //ShuffleGrading(new Pile(4), 5, gradingMetrics);
+            //ShuffleGrading(new Pile(5), 5, gradingMetrics);
+            //ShuffleGrading(new Pile(6), 5, gradingMetrics);
+            //ShuffleGrading(new Pile(7), 5, gradingMetrics);
+            //ShuffleGrading(new RandomPile(2), 5, gradingMetrics);
+            //ShuffleGrading(new RandomPile(3), 5, gradingMetrics);
+            //ShuffleGrading(new RandomPile(4), 5, gradingMetrics);
+            //ShuffleGrading(new RandomPile(5), 5, gradingMetrics);
+            ShuffleGrading(new RandomPile(6), 5, gradingMetrics);
+            //ShuffleGrading(new RandomPile(7), 5, gradingMetrics);
             //ShuffleWriteData(shuffleTypes, 5, new CSVWriter(), new StringBuilderOutputWriter());
-            
-            string filename = $"training_data_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
-            using (IOutputWriter writer = new StreamOutputWriter(filename))
-            {
-                ShuffleWriteData(shuffleTypes, 5, new CSVWriter(), writer, filename);
-            }
+
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    string filename = $"training_data_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
+            //    Console.WriteLine($"Writing data to {filename}");
+            //    using (IOutputWriter writer = new StreamOutputWriter(filename))
+            //    {
+            //        ShuffleWriteData(shuffleTypes, 5, new CSVWriter(), writer, filename);
+            //    }
+            //    Console.WriteLine($"Finished writing data to {filename}");
+            //}
 
             Console.ReadLine();
         }
